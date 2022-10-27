@@ -4,7 +4,7 @@ class VideosController < ApplicationController
 
   # GET /videos
   def index
-    @videos = Video.all
+    @videos = @user.videos.all
 
     render json: @videos
   end
@@ -16,7 +16,7 @@ class VideosController < ApplicationController
 
   # POST /videos
   def create
-    @video = Video.new(video_params)
+    @video = Video.new(video_params.merge(user: @user))
 
     if @video.save
       render json: @video, status: :created, location: @video
@@ -42,11 +42,11 @@ class VideosController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_video
-      @video = Video.find(params[:id])
+      @video = @user.videos.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def video_params
-      params.require(:video).permit(:title, :user_id)
+      params.require(:video).permit(:title)
     end
 end
