@@ -10,10 +10,10 @@ require "faker"
 
 120.times do
 
-    movies = Movie.new(
+    @movies = Movie.new(
         title: Faker::Movie.title,
         quote: Faker::Movie.quote
     )
-movies.save
+@movies.save
 
 end
